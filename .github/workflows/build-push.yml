@@ -79,4 +79,4 @@ jobs:
         with:
           aws-region:  ${{ vars.AWS_REGION }}
           terraform-execution-iam-role-arn: ${{ secrets.AWS_IAM_ROLE_ARN }}
-          eks-cluster-name: ${{ vars.EKS_CLUSTER_NAME }}
+          eks-cluster-name: ${{ vars.EKS_CLUSTER_NAME }} 
