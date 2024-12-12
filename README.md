@@ -144,7 +144,7 @@ helm uninstall demoapp
 
 ### Setup Environmetn Variables and secrets in Github repository
 Secrets:
-- AWS_IAM_ROLE
+- AWS_IAM_ROLE_ARN
 
 Environment variables:
 - AWS_REGION
