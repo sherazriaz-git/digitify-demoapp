@@ -1,0 +1,40 @@
+name: "Deploy Application with Helm"
+description: "Docker image build and publish"
+inputs:
+  aws-region:
+    required: true
+    description: "AWS Region"
+  terraform-execution-iam-role-arn:
+    required: true
+    description: "Terraform Execution IAM Role ARN"
+  eks-cluster-name:
+    required: true
+    description: "EKS Cluster name"
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: ${{ inputs.terraform-execution-iam-role-arn }}
+        role-session-name: terraform-execution-role
+        aws-region: ${{ inputs.aws-region }}
+        role-duration-seconds: 1200
+
+    - name: Update Kubeconfig for EKS
+      shell: bash
+      run: |
+        aws --version 
+        aws eks update-kubeconfig --name ${{ inputs.eks-cluster-name }} --region ${{ inputs.aws-region }}
+
+    - name: Deploy Application with Helm
+      shell: bash
+      run: |
+        ls
+        kubectl get po
+        cd helm/demoapp && helm upgrade --install demoapp ../demoapp -f ../../demoapp.yaml
+        sleep 120s
+        kubectl get ingress
+        INGRESS_HOST=$(kubectl get ingress -A -o jsonpath='{.items[0].status.loadBalancer.ingress[0].hostname}') 

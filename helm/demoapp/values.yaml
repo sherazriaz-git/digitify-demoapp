@@ -1,0 +1,18 @@
+# defaults
+
+service:
+  name: my-service
+  replicas: 2
+  image:
+    repository: nginx
+    tag: latest
+  port: 80
+  type: ClusterIP
+  env:
+    ENV_VAR1: value1
+    ENV_VAR2: value2
+
+ingress:
+  enabled: false
+  host: example.com
+  annotations: {}

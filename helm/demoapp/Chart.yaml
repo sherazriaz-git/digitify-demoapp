@@ -1,0 +1,5 @@
+apiVersion: v2
+name: DemoApp
+description: A Helm chart for DemoApp on AWS EKS
+version: 0.1.0
+appVersion: "1.0.0"
